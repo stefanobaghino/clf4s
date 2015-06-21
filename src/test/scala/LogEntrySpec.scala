@@ -3,8 +3,6 @@ package clf4s
 import clf4s.http._
 import org.scalatest.FlatSpec
 
-import scala.io.Source
-
 class LogEntrySpec extends FlatSpec {
 
   private implicit class RichThrowable(throwable: Throwable) {

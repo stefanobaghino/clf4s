@@ -2,6 +2,8 @@ name := """clf4s"""
 
 version := "0.0.1"
 
+organization := "me.baghino"
+
 scalaVersion := "2.11.6"
 
 libraryDependencies ++= Seq(

@@ -10,8 +10,8 @@ object Request {
   }
   
   def apply(method: String, request: String, protocol: String): Option[Request] =
-    Method.apply(method).map(method => Request(method, request, protocol))
+    for (method <- Method.apply(method); protocol <- Protocol.apply(protocol)) yield Request(method, request, protocol)
   
 }
 
-case class Request(method: Method, resource: String, protocol: String)
+case class Request(method: Method, resource: String, protocol: Protocol)

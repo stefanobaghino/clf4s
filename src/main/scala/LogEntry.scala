@@ -16,7 +16,7 @@ object LogEntry {
   }
 
   private val logEntryRegex =
-    "^(\\S+) (\\S+) (\\S+) \\[([\\w:/]+\\s[+\\-]\\d{4})\\] \"(\\S+ \\S+\\s*\\S*\\s*)\" (\\d{3}) (\\d+)".r
+    "^(\\S+) (\\S+) (\\S+) \\[([\\w:/]+\\s[+\\-]\\d{4})\\] \"(\\S+ \\S+\\s*\\S*\\s*)\" (\\d{3}) (\\S+)".r
 
   private val datePattern = DateTimeFormat.forPattern("dd/MMM/yyyy:HH:mm:ss Z").withLocale(Locale.US)
 
@@ -34,7 +34,7 @@ object LogEntry {
         date = DateTime.parse(d, datePattern),
         request = Request.unapply(r).getOrElse(throw new ParseException(r, 0)),
         status = s.toInt,
-        bytes = b.toLong
+        bytes = optional(b).map(_.toLong)
       ))
     } catch {
       case e: Throwable => Left(e)
@@ -42,4 +42,4 @@ object LogEntry {
 
 }
 
-case class LogEntry(host: String, identity: Option[String], user: Option[String], date: DateTime, request: Request, status: Int, bytes: Long)
+case class LogEntry(host: String, identity: Option[String], user: Option[String], date: DateTime, request: Request, status: Int, bytes: Option[Long])

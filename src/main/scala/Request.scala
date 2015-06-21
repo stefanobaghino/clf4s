@@ -2,7 +2,7 @@ package clf4s.http
 
 object Request {
   
-  private val regex = "(\\S+) (\\S+)\\s*(\\S*)".r
+  private val regex = "(\\S+) (\\S+)\\s*(\\S*)\\s*".r
   
   def unapply(request: String): Option[Request] = request match {
     case regex(m, r, p) => Request(m, r, p)
@@ -10,8 +10,8 @@ object Request {
   }
   
   def apply(method: String, request: String, protocol: String): Option[Request] =
-    for (method <- Method.apply(method); protocol <- Protocol.apply(protocol)) yield Request(method, request, protocol)
-  
+    for (method <- Method(method)) yield Request(method, request, Protocol(protocol))
+
 }
 
-case class Request(method: Method, resource: String, protocol: Protocol)
+case class Request(method: Method, resource: String, protocol: Option[Protocol])

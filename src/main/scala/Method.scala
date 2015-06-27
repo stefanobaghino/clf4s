@@ -2,11 +2,11 @@ package clf4s.http
 
 object Method {
 
-  def apply(methodName: String): Option[Method] = names.get(methodName)
+  def apply(methodName: String): Option[Method] = nameToMethod.get(methodName)
 
   def unapply(method: Method): String = method.toString
 
-  private val names = Map(
+  private val nameToMethod = Map(
     OPTIONS.toString -> OPTIONS,
     GET.toString -> GET,
     HEAD.toString -> HEAD,
@@ -16,6 +16,7 @@ object Method {
     TRACE.toString -> TRACE,
     CONNECT.toString -> CONNECT
   )
+
 }
 
 sealed abstract class Method {

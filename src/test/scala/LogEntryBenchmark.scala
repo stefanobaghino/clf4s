@@ -11,14 +11,21 @@ object LogEntryBenchmark extends PerformanceTest {
     new Executor.Warmer.Default,
     Aggregator.min,
     new Measurer.Default)
-  lazy val reporter = new LoggingReporter
+  lazy val reporter = ChartReporter(ChartFactory.NormalHistogram())
   lazy val persistor = Persistor.None
 
+
   try {
-    val logEntries = Gen.enumeration("logEntry")(Source.fromFile("src/test/resources/perf-test-sample.log").getLines().toList: _*)
-    println("Full log successfully loaded, running performance tests... ")
+    val logEntriesIterator = Source.fromFile("src/test/resources/perf-test-sample.log")
+    val logEntries = Gen.enumeration("logEntry")(logEntriesIterator.getLines().toList: _*)
+    println("Log sample for performance testing loaded, running performance tests... ")
     performance of "LogEntry" in {
-      measure method "apply" in {
+      measure method "apply" config (
+        exec.benchRuns -> 64,
+        exec.minWarmupRuns -> 1000,
+        exec.maxWarmupRuns -> 10000,
+        exec.warmupCovThreshold -> 1.0
+        ) in {
         using(logEntries) in { logEntry =>
           LogEntry(logEntry)
         }
@@ -27,7 +34,7 @@ object LogEntryBenchmark extends PerformanceTest {
 
   } catch {
     case e: Throwable =>
-      println(s"Performance testing skipped for the following reason:\n${e.getClass.getName}: ${e.getMessage}")
+      println(s"Performance testing skipped for the following reason:\n\t${e.getClass.getName}: ${e.getMessage}")
   }
 
 }

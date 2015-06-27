@@ -13,7 +13,11 @@ libraryDependencies ++= Seq(
   "com.storm-enroute" %% "scalameter" % "0.6" % "test",
   "org.scalatest" % "scalatest_2.11" % "2.2.4" % "test")
 
-testFrameworks += new TestFramework("org.scalameter.ScalaMeterFramework")
+val scalaMeterFramework = new TestFramework("org.scalameter.ScalaMeterFramework")
+
+testFrameworks in ThisBuild += scalaMeterFramework
+
+testOptions in ThisBuild += Tests.Argument(scalaMeterFramework, "-silent")
 
 logBuffered := false
 

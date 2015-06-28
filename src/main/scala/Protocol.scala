@@ -11,11 +11,17 @@ object Protocol {
     case _ => None
   }
 
-  def unapply(method: Method): String = method.toString
+  def unapply(protocol: Protocol): String = protocol.toString
 
 }
 
-final object `HTTP/1.0` extends Protocol
-final object `HTTP/1.1` extends Protocol
-final object `HTTP/2.0` extends Protocol
+object `HTTP/1.0` extends Protocol {
+  override val toString: String = "HTTP/1.0"
+}
+object `HTTP/1.1` extends Protocol {
+  override val toString: String = "HTTP/1.1"
+}
+object `HTTP/2.0` extends Protocol {
+  override val toString: String = "HTTP/2.0"
+}
 

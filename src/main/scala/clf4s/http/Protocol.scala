@@ -4,12 +4,13 @@ sealed abstract class Protocol
 
 object Protocol {
 
-  def apply(protocolString: String): Option[Protocol] = protocolString match {
-    case "HTTP/1.0" => Some(`HTTP/1.0`)
-    case "HTTP/1.1" => Some(`HTTP/1.1`)
-    case "HTTP/2.0" => Some(`HTTP/2.0`)
-    case _ => None
-  }
+  private val nameToProtocol = Map(
+    `HTTP/1.0`.toString -> `HTTP/1.0`,
+    `HTTP/1.1`.toString -> `HTTP/1.1`,
+    `HTTP/2.0`.toString -> `HTTP/2.0`
+  )
+
+  def apply(protocolString: String): Option[Protocol] = nameToProtocol.get(protocolString)
 
   def unapply(protocol: Protocol): String = protocol.toString
 

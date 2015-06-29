@@ -10,7 +10,7 @@ Just call the ```LogEntry``` function to parse a line and get ```Either``` a ```
 Model
 -----
 
-The ```LogEntry``` is composed of:
+The ```LogEntry```:
 * ```host: String```
 * ```identity: Option[String]```
 * ```user: Option[String]```

@@ -5,16 +5,25 @@ import org.scalatest.FlatSpec
 
 class LogEntrySpec extends FlatSpec {
 
-  private implicit class RichThrowable(throwable: Throwable) {
+  implicit class RichThrowable(throwable: Throwable) {
     lazy val shortStackTrace: String =
       s"${throwable.getClass.getName}: ${throwable.getMessage}\n\t${throwable.getStackTrace.take(10).mkString("\n\t")}"
   }
 
-  val oneSample =
+  val simpleSample =
     "in24.inetnebr.com - - [01/Aug/1995:00:00:01 -0400] \"GET /shuttle/missions/sts-68/news/sts-68-mcc-05.txt HTTP/1.0\" 200 1839"
 
-  "A single sample" should "be parsed correctly" in {
-    val maybeLogEntry = LogEntry(oneSample)
+  val cachedReplySample =
+    "gw1.att.com - - [01/Aug/1995:00:03:53 -0400] \"GET /shuttle/missions/sts-73/news HTTP/1.0\" 302 -"
+
+  val noProtocolSample =
+    "pipe1.nyc.pipeline.com - - [01/Aug/1995:00:12:37 -0400] \"GET /history/apollo/apollo-13/apollo-13-patch-small.gif\" 200 12859"
+
+  val trailingBlanksSample =
+    "ix-sac6-20.ix.netcom.com - - [08/Aug/1995:14:43:39 -0400] \"GET / HTTP/1.0 \" 200 7131"
+
+  "A simple sample" should "be parsed correctly" in {
+    val maybeLogEntry = LogEntry(simpleSample)
     maybeLogEntry match {
       case Right(logEntry) =>
         assert(logEntry.host === "in24.inetnebr.com")
@@ -31,11 +40,8 @@ class LogEntrySpec extends FlatSpec {
     }
   }
 
-  val cached =
-    "gw1.att.com - - [01/Aug/1995:00:03:53 -0400] \"GET /shuttle/missions/sts-73/news HTTP/1.0\" 302 -"
-
   "A cached page reply (3xx)" should "be parsed correctly" in {
-    val maybeLogEntry = LogEntry(cached)
+    val maybeLogEntry = LogEntry(cachedReplySample)
     maybeLogEntry match {
       case Right(logEntry) =>
         assert(logEntry.host === "gw1.att.com")
@@ -52,11 +58,8 @@ class LogEntrySpec extends FlatSpec {
     }
   }
 
-  val noProtocol =
-    "pipe1.nyc.pipeline.com - - [01/Aug/1995:00:12:37 -0400] \"GET /history/apollo/apollo-13/apollo-13-patch-small.gif\" 200 12859"
-
   "A line without protocol" should "be parsed correctly" in {
-    val maybeLogEntry = LogEntry(noProtocol)
+    val maybeLogEntry = LogEntry(noProtocolSample)
     maybeLogEntry match {
       case Right(logEntry) =>
         assert(logEntry.host === "pipe1.nyc.pipeline.com")
@@ -73,11 +76,8 @@ class LogEntrySpec extends FlatSpec {
     }
   }
 
-  val trailingBlanks =
-    "ix-sac6-20.ix.netcom.com - - [08/Aug/1995:14:43:39 -0400] \"GET / HTTP/1.0 \" 200 7131"
-
   "A line with trailing blanks" should "be parsed correctly" in {
-    val maybeLogEntry = LogEntry(trailingBlanks)
+    val maybeLogEntry = LogEntry(trailingBlanksSample)
     maybeLogEntry match {
       case Right(logEntry) =>
         assert(logEntry.host === "ix-sac6-20.ix.netcom.com")

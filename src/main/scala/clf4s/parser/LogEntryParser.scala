@@ -5,7 +5,6 @@ import clf4s.LogEntry
 object LogEntryParser {
 
   implicit val regexParser: LogEntryParser = new RegexLogEntryParser
-  val stagedParser: LogEntryParser = new StagedLogEntryParser
 
 }
 

@@ -10,12 +10,6 @@ import org.joda.time.format.DateTimeFormat
 
 class RegexLogEntryParser extends LogEntryParser {
 
-  // In the CLF, missing values are denoted by a dash
-  private def optional(s: String): Option[String] = s match {
-    case "-" => None
-    case _ => Some(s)
-  }
-
   private val logEntryRegex =
     "^(\\S+) (\\S+) (\\S+) \\[([\\w:/]+\\s[+\\-]\\d{4})\\] \"(\\S+ \\S+\\s*\\S*\\s*)\" (\\d{3}) (\\S+)".r
 

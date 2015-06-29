@@ -20,5 +20,5 @@ A simple Scala library to read logs in Apache's Common Log Format, like the foll
     * ```protocol: Protocol``` (an ADT that models HTTP protocol versions)
 
 You can import it with SBT like this:
-* ```libraryDependencies += "me.baghino" % "clf4s_2.11" % "0.1.0"```
+* ```libraryDependencies += "me.baghino" % "clf4s_2.11" % "0.0.1"```
 

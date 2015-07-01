@@ -1,24 +1,32 @@
 CLF4S
 =====
 
-A simple Scala library to read logs in Apache's Common Log Format, like the following:
+A simple Scala library to read logs in the [Common Log Format](https://en.wikipedia.org/wiki/Common_Log_Format), like the following:
 
-```in24.inetnebr.com - - [01/Aug/1995:00:00:01 -0400] "GET /shuttle/missions/sts-68/news/sts-68-mcc-05.txt HTTP/1.0" 200 1839```
+```127.0.0.1 - frank [10/Oct/2000:13:55:36 -0700] "GET /apache_pb.gif HTTP/1.0" 200 2326```
 
-* Use the ```LogEntry``` companion to parse a line and get ```Either``` a ```Throwable``` or an actual ```LogEntry```
-* Each ```LogEntry``` includes:
-    * ```host: String```
-    * ```identity: Option[String]```
-    * ```user: Option[String]```
-    * ```date: DateTime```
-    * ```request: Request```
-    * ```status: Int```
-    * ```bytes: Option[Long]``` (missing for 3xx responses)
-* Each ```Request``` includes:
-    * ```method: Method``` (an ADT that models HTTP request methods)
-    * ```resource: String```
-    * ```protocol: Protocol``` (an ADT that models HTTP protocol versions)
+Just call the ```LogEntry``` function to parse a line and get ```Either``` a ```Throwable``` or an actual ```LogEntry```.
 
-You can import it with SBT like this:
+Model
+-----
+
+The ```LogEntry```:
+* ```host: String```
+* ```identity: Option[String]```
+* ```user: Option[String]```
+* ```date: DateTime```
+* ```request: Request```
+* ```status: Int```
+* ```bytes: Option[Long]``` (missing for 3xx responses)
+
+The ```Request```:
+* ```method: Method``` (an ADT that models HTTP request methods)
+* ```resource: String```
+* ```protocol: Protocol``` (an ADT that models HTTP protocol versions)
+
+How to use it
+-------------
+
+Just import it with SBT:
 * ```libraryDependencies += "me.baghino" % "clf4s_2.11" % "0.0.1"```
 

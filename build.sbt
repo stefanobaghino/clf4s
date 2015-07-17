@@ -4,11 +4,11 @@ version := "0.0.2"
 
 organization := "me.baghino"
 
-scalaVersion := "2.11.6"
+crossScalaVersions := Seq("2.10.5", "2.11.7")
 
 libraryDependencies ++= Seq(
   "joda-time" % "joda-time" % "2.7",
-  "org.scalatest" % "scalatest_2.11" % "2.2.4" % "test")
+  "org.scalatest" %% "scalatest" % "2.2.4" % "test")
 
 initialCommands in console := """
   |import clf4s._

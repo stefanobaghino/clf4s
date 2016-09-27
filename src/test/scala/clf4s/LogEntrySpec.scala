@@ -31,7 +31,8 @@ class LogEntrySpec extends FlatSpec {
         assert(logEntry.user === None)
         assert(logEntry.date.getMillis === 807249601000L)
         assert(logEntry.request.method === GET)
-        assert(logEntry.request.resource === "/shuttle/missions/sts-68/news/sts-68-mcc-05.txt")
+        assert(
+          logEntry.request.resource === "/shuttle/missions/sts-68/news/sts-68-mcc-05.txt")
         assert(logEntry.request.protocol === Some(`HTTP/1.0`))
         assert(logEntry.status === 200)
         assert(logEntry.bytes === Some(1839))
@@ -67,7 +68,8 @@ class LogEntrySpec extends FlatSpec {
         assert(logEntry.user === None)
         assert(logEntry.date.getMillis === 807250357000L)
         assert(logEntry.request.method === GET)
-        assert(logEntry.request.resource === "/history/apollo/apollo-13/apollo-13-patch-small.gif")
+        assert(
+          logEntry.request.resource === "/history/apollo/apollo-13/apollo-13-patch-small.gif")
         assert(logEntry.request.protocol === None)
         assert(logEntry.status === 200)
         assert(logEntry.bytes === Some(12859))

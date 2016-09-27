@@ -6,7 +6,9 @@ import org.joda.time.DateTime
 
 object LogEntry {
 
-  def apply(logEntry: String)(implicit parser: LogEntryParser): Either[Throwable, LogEntry] = parser.parse(logEntry)
+  def apply(logEntry: String)(
+      implicit parser: LogEntryParser): Either[Throwable, LogEntry] =
+    parser.parse(logEntry)
 
 }
 

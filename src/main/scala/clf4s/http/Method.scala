@@ -20,7 +20,8 @@ object Method {
 }
 
 sealed abstract class Method {
-  override val toString: String = this.getClass.getSimpleName.replace('$', ' ').trim
+  override val toString: String =
+    this.getClass.getSimpleName.replace('$', ' ').trim
 }
 
 object OPTIONS extends Method

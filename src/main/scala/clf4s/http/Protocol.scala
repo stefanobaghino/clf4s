@@ -10,7 +10,8 @@ object Protocol {
     `HTTP/2.0`.toString -> `HTTP/2.0`
   )
 
-  def apply(protocolString: String): Option[Protocol] = nameToProtocol.get(protocolString)
+  def apply(protocolString: String): Option[Protocol] =
+    nameToProtocol.get(protocolString)
 
   def unapply(protocol: Protocol): String = protocol.toString
 
@@ -25,4 +26,3 @@ object `HTTP/1.1` extends Protocol {
 object `HTTP/2.0` extends Protocol {
   override val toString: String = "HTTP/2.0"
 }
-

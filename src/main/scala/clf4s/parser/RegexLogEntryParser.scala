@@ -15,14 +15,21 @@ class RegexLogEntryParser extends LogEntryParser {
   private val logEntryRegex =
     "^(\\S+) (\\S+) (\\S+) \\[([\\w:/]+\\s[+\\-]\\d{4})\\] \"(\\S+ \\S+\\s*\\S*\\s*)\" (\\d{3}) (\\S+)".r
 
-  private val datePattern = DateTimeFormat.forPattern("dd/MMM/yyyy:HH:mm:ss Z").withLocale(Locale.US)
+  private val datePattern =
+    DateTimeFormat.forPattern("dd/MMM/yyyy:HH:mm:ss Z").withLocale(Locale.US)
 
   def parse(logEntry: String): Either[Throwable, LogEntry] = logEntry match {
     case logEntryRegex(h, i, u, d, r, s, b) => parse(h, i, u, d, r, s, b)
     case _ => Left(new ParseException(logEntry, 0))
   }
 
-  private def parse(h: String, i: String, u: String, d: String, r: String, s: String, b: String): Either[Throwable, LogEntry] =
+  private def parse(h: String,
+                    i: String,
+                    u: String,
+                    d: String,
+                    r: String,
+                    s: String,
+                    b: String): Either[Throwable, LogEntry] =
     Try {
       LogEntry(
         host = h,

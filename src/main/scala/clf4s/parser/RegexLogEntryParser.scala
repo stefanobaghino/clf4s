@@ -1,5 +1,7 @@
 package clf4s.parser
 
+import scala.util.{Try, Success, Failure}
+
 import java.text.ParseException
 import java.util.Locale
 
@@ -21,8 +23,8 @@ class RegexLogEntryParser extends LogEntryParser {
   }
 
   private def parse(h: String, i: String, u: String, d: String, r: String, s: String, b: String): Either[Throwable, LogEntry] =
-    try {
-      Right(LogEntry(
+    Try {
+      LogEntry(
         host = h,
         identity = optional(i),
         user = optional(u),
@@ -30,9 +32,10 @@ class RegexLogEntryParser extends LogEntryParser {
         request = Request.unapply(r).getOrElse(throw new ParseException(r, 0)),
         status = s.toInt,
         bytes = optional(b).map(_.toLong)
-      ))
-    } catch {
-      case e: Throwable => Left(e)
+      )
+    } match {
+      case Success(logEntry) => Right(logEntry)
+      case Failure(exception) => Left(exception)
     }
 
 }

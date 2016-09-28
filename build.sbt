@@ -12,6 +12,8 @@ libraryDependencies ++= Seq("joda-time" % "joda-time" % "2.7",
 compileInputs in (Test, compile) <<=
   (compileInputs in (Test, compile)) dependsOn (scalafmtTest in Test)
 
+coverageEnabled := true
+
 initialCommands in console := """
   |import clf4s._
   |""".stripMargin

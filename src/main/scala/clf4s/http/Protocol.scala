@@ -13,7 +13,7 @@ object Protocol {
   def apply(protocolString: String): Option[Protocol] =
     nameToProtocol.get(protocolString)
 
-  def unapply(protocol: Protocol): String = protocol.toString
+  def unapply(protocol: Protocol): Option[String] = Some(protocol.toString)
 
 }
 

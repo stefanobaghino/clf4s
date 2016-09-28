@@ -15,7 +15,7 @@ object Method {
 
   def apply(methodName: String): Option[Method] = nameToMethod.get(methodName)
 
-  def unapply(method: Method): String = method.toString
+  def unapply(method: Method): Option[String] = Some(method.toString)
 
 }
 

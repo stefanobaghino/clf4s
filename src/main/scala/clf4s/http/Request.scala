@@ -10,10 +10,10 @@ object Request {
   }
 
   def apply(method: String,
-            request: String,
+            resource: String,
             protocol: String): Option[Request] =
     for (method <- Method(method))
-      yield Request(method, request, Protocol(protocol))
+      yield Request(method, resource, Protocol(protocol))
 
 }
 

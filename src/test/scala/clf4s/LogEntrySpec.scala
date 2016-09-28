@@ -10,6 +10,9 @@ class LogEntrySpec extends FlatSpec {
       s"${throwable.getClass.getName}: ${throwable.getMessage}\n\t${throwable.getStackTrace.take(10).mkString("\n\t")}"
   }
 
+  val missingResourceSample =
+    "in24.inetnebr.com - - [01/Aug/1995:00:00:01 -0400] \"GET\" 200 1839"
+
   val simpleSample =
     "in24.inetnebr.com - - [01/Aug/1995:00:00:01 -0400] \"GET /shuttle/missions/sts-68/news/sts-68-mcc-05.txt HTTP/1.0\" 200 1839"
 
@@ -21,6 +24,10 @@ class LogEntrySpec extends FlatSpec {
 
   val trailingBlanksSample =
     "ix-sac6-20.ix.netcom.com - - [08/Aug/1995:14:43:39 -0400] \"GET / HTTP/1.0 \" 200 7131"
+
+  "A sample with a missing resource" should "not be parsed correctly" in {
+    assert(LogEntry(missingResourceSample).isLeft)
+  }
 
   "A simple sample" should "be parsed correctly" in {
     val maybeLogEntry = LogEntry(simpleSample)
